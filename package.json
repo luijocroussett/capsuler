@@ -1,0 +1,22 @@
+{
+  "name": "pill-project",
+  "version": "1.0.0",
+  "description": "backend for pill reminder app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "db-setup": "node scripts/setupDatabase.js",
+    "db-clear": "node scripts/clearDatabase.js",
+    "db-seed": "node scripts/seedDatabase.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^5.1.0",
+    "node-postgres": "^0.6.2",
+    "nodemon": "^3.1.10"
+  }
+}
