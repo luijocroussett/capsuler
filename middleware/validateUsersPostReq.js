@@ -1,6 +1,6 @@
 const {body, validationResult} = require('express-validator');
 
-const validateUserPostReq = [
+const validateUsersPostReq = [
     body('name')
         .notEmpty()
         .withMessage('Name is required')
@@ -29,4 +29,4 @@ const validateUserPostReq = [
     }
 ]
 
-module.exports = validateUserPostReq;
+module.exports = validateUsersPostReq;

@@ -3,11 +3,13 @@ const {comparePassword} = require('../utils/authUtils');
 
 module.exports = async (req, res, next) => {
     const {email, password} = req.body;
+    const pgPool = res.locals.pgPool;
+
     if (!email || !password) {
         return res.status(400).json({error: 'Email and password are required'});
     }
     try {
-        const credentials = await getUserCredentialsFromEmail(email);
+        const credentials = await getUserCredentialsFromEmail({email}, pgPool);
         const isValid = await comparePassword(password, credentials.password);
         if (!isValid) {
             return res.status(401).json({error: 'Invalid email or password'});

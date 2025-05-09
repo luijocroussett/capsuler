@@ -1,10 +1,12 @@
 const { generateToken, verifyToken } = require("../utils/authUtils");
-const redisClient = require("../redisClient");
 
 module.exports = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
+  const redisClient = res.locals.redisClient;
 
+  console.log("request received", req.method, req.baseUrl, req.url == "/" ? "" : req.url);
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    console.error("Authorization header missing or invalid format");
     return res.status(401).json({ error: "Unauthorized" });
   }
 
@@ -20,6 +22,7 @@ module.exports = async (req, res, next) => {
     const decoded = await verifyToken(token);
 
     req.user = decoded;
+    console.log("Token verified successfully");
     next();
   } catch (err) {
     if (err.message === "Token is blacklisted") {

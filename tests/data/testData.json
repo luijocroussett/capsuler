@@ -1,0 +1,40 @@
+{
+  "users": {
+    "user1": {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "password": "hashed_password",
+      "date_of_birth": "1990-01-01"
+    },
+    "user2": {
+      "id": 2,
+      "name": "Jane Doe",
+      "email": "jane.doe@example.com",
+      "password": "hashed_password",
+      "date_of_birth": "1991-01-01"
+    }
+  },
+  "medications": {
+    "medication1": {
+      "id": 1,
+      "user_id": "testUserId",
+      "name": "Aspirin",
+      "instructions": "Take one tablet every 4-6 hours as needed.",
+      "status": "active",
+      "description": "Pain reliever",
+      "dosage": "500mg",
+      "type": "capsule"
+    },
+    "medication2": {
+      "id": 2,
+      "user_id": "testUserId",
+      "name": "Ibuprofen",
+      "instructions": "Take one tablet every 4-6 hours as needed.",
+      "status": "active",
+      "description": "Anti-inflammatory",
+      "dosage": "200mg",
+      "type": "pill"
+    }
+  }
+}
