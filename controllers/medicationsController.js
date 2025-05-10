@@ -25,12 +25,13 @@ const getMedicationController = async (req, res) => {
 
   try {
     const result = await getMedication({ medicationId }, pgPool);
-    if (result) {
-      res.status(200).json(result);
-    } else {
-      res.status(404).json({ error: "Medication not found" });
-    }
+    console.log("Medication was retrieved successfully", result);
+    res.status(200).json(result);
   } catch (error) {
+    if (error.message === "Medication not found") {
+      console.log("Medication not found for id:", medicationId);
+      return res.status(404).json({ error: "Medication not found" });
+    }
     console.error("Error fetching medication:", error);
     res.status(500).json({ error: "Internal server error" });
   }

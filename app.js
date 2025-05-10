@@ -3,7 +3,7 @@ const authRoutes = require("./routes/authRoutes");
 const usersRoutes = require("./routes/usersRoutes");
 const medicationsRoutes = require('./routes/medicationsRoutes');
 // const schedulesRoutes = require('./routes/schedulesRoutes');
-// const intakeLogsRoutes = require('./routes/intakeLogsRoutes');
+const intakeLogsRoutes = require('./routes/intakeLogsRoutes');
 
 const makeApp = (pgPool, redisClient) => {
   const app = express();
@@ -22,7 +22,7 @@ const makeApp = (pgPool, redisClient) => {
   app.use("/users", usersRoutes);
   app.use('/medications', medicationsRoutes);
   // app.use('/schedules', schedulesRoutes);
-  // app.use('/intakeLogs', intakeLogsRoutes);
+  app.use('/intake-logs', intakeLogsRoutes);
   app.get("/", (req, res) => {
     res.send("Welcome to the Pill Project API");
   });

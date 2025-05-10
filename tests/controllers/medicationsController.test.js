@@ -39,6 +39,25 @@ describe("Medications Controller", () => {
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith([medication1, medication2]);
     });
+
+    it("should handle errors", async () => {
+      // Mock the database query to throw an error
+      pool.query.mockRejectedValueOnce(new Error("Database error"));
+
+      const req = {};
+      const res = {
+        locals: { pgPool: pool }, // Attach the mock database to res.locals
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+
+      await getAllMedicationsController(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Internal server error",
+      });
+    });
   });
 
   describe("getMedicationById", () => {
@@ -62,6 +81,28 @@ describe("Medications Controller", () => {
       );
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith(medication1);
+    });
+
+    it("should return 404 if medication not found", async () => {
+      pool.query.mockResolvedValueOnce({
+        rows: [], // No medication found
+      });
+
+      const req = { params: { medicationId: 999 } };
+      const res = {
+        locals: { pgPool: pool }, // Attach the mock database to res.locals
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+
+      await getMedicationController(req, res);
+
+      expect(pool.query).toHaveBeenCalledWith(
+        "SELECT * FROM medications WHERE id = $1;",
+        [999]
+      );
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ error: "Medication not found" });
     });
   });
 
@@ -107,6 +148,35 @@ describe("Medications Controller", () => {
       expect(res.status).toHaveBeenCalledWith(201);
       expect(res.json).toHaveBeenCalledWith(medication1);
     });
+
+    it("should handle errors", async () => {
+      pool.query.mockRejectedValueOnce(new Error("Database error"));
+
+      const req = {
+        body: {
+          id: 1,
+          name: "Medication 1",
+          description: "Description 1",
+          dosage: "Dosage 1",
+          status: "active",
+          type: "type1",
+          user_id: 1,
+          instructions: "Take once a day",
+        },
+      };
+      const res = {
+        locals: { pgPool: pool }, // Attach the mock database to res.locals
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+
+      await createMedicationController(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Internal server error",
+      });
+    });
   });
 
   describe("updateMedication", () => {
@@ -146,5 +216,30 @@ describe("Medications Controller", () => {
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith({...medication1, name: "Updated Medication" });
     });
+
+    it("should handle errors", async () => {
+      pool.query.mockRejectedValueOnce(new Error("Database error"));
+
+      const req = {
+        params: { medicationId: 1 },
+        body: {
+          id: 1,
+          name: "Updated Medication"
+        },
+      };
+      const res = {
+        locals: { pgPool: pool }, // Attach the mock database to res.locals
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+
+      await updateMedicationController(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Internal server error",
+      });
+    });
+
   });
 });

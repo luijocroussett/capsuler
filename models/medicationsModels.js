@@ -2,8 +2,9 @@ const getMedication = async ({ medicationId }, pgPool) => {
   const query = `SELECT * FROM medications WHERE id = $1;`;
   const values = [medicationId];
   const result = await pgPool.query(query, values);
+  console.log("Medication was retrieved successfully roooows", result.rows);
   if (result.rows.length === 0) {
-    throw new Error(`Medication with id ${medicationId} not found`);
+    throw new Error("Medication not found");
   }
   return result.rows[0];
 };

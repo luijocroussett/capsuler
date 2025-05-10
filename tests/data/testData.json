@@ -36,5 +36,21 @@
       "dosage": "200mg",
       "type": "pill"
     }
+  },
+  "intakeLogs": {
+    "intake1": {
+      "id": 1,
+      "user_id": "testUserId",
+      "medication_id": 1,
+      "taken_at": "2023-10-01",
+      "note": "No side effects"
+    },
+    "intake2": {
+      "id": 2,
+      "user_id": "testUserId",
+      "medication_id": 2,
+      "taken_at": "2023-10-02",
+      "note": "No side effects"
+    }
   }
 }

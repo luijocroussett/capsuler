@@ -2,8 +2,6 @@
 const { getAllUsers, getUser, createUser, updateUser} = require("../models/userModels");
 const { v4: uuidv4 } = require("uuid");
 
-
-
 const getAllUsersController = async (req, res) => {
     try {
       console.log(`- ${new Date().toISOString()} - GET request received at /users | Fetching all users`);

@@ -37,6 +37,20 @@ describe('Users Controller', () => {
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalledWith([user1, user2]);
         });
+        it ('should return 500 if there is an error', async () => {
+            pool.query.mockRejectedValueOnce(new Error('Database error'));
+
+            const req = {};
+            const res = {
+                locals: { pgPool: pool }, // Attach the mock database to res.locals
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await getAllUsersController(req, res);
+            
+            expect(res.status).toHaveBeenCalledWith(500);
+        });
     });
 
     describe('getUserController', () => {
@@ -75,6 +89,21 @@ describe('Users Controller', () => {
             expect(res.status).toHaveBeenCalledWith(404);
             expect(res.json).toHaveBeenCalledWith({ error: 'User not found' });
         });
+
+        it ('should return 500 if there is an error', async () => {
+            pool.query.mockRejectedValueOnce(new Error('Database error'));
+
+            const req = { params: { id: 1 } };
+            const res = {
+                locals: { pgPool: pool }, // Attach the mock database to res.locals
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await getUserController(req, res);
+            
+            expect(res.status).toHaveBeenCalledWith(500);
+        });
     });
 
     describe('createUserController', () => {
@@ -100,6 +129,23 @@ describe('Users Controller', () => {
             );
             expect(res.status).toHaveBeenCalledWith(201);
             expect(res.json).toHaveBeenCalledWith(user1);
+        });
+
+        it('should return 500 if there is an error', async () => {
+            pool.query.mockRejectedValueOnce(new Error('Database error'));
+
+            const req = {
+                body: user1,
+            };
+            const res = {
+                locals: { pgPool: pool }, // Attach the mock database to res.locals
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await createUserController(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(500);
         });
     });
 
@@ -154,6 +200,26 @@ describe('Users Controller', () => {
             );
             expect(res.status).toHaveBeenCalledWith(404);
             expect(res.json).toHaveBeenCalledWith({ error: 'User not found' });
+        });
+
+        it('should return 500 if there is an error', async () => {
+            pool.query.mockRejectedValueOnce(new Error('Database error'));
+
+            const req = {
+                body: {
+                    id: 1,
+                    name: 'Updated User',
+                },
+            };
+            const res = {
+                locals: { pgPool: pool }, // Attach the mock database to res.locals
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            await updateUserController(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(500);
         });
     });
 });
