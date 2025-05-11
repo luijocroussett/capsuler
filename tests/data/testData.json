@@ -52,5 +52,29 @@
       "taken_at": "2023-10-02",
       "note": "No side effects"
     }
+  },
+  "schedules": {
+    "schedule1": {
+      "id": "1",
+      "user_id": "testUserId",
+      "medication_id": 1,
+      "start_date": "2023-10-01",
+      "end_date": "2023-10-31",
+      "frequency": "daily",
+      "time_of_day": "morning",
+      "day_of_week": "Monday",
+      "created_at": "2023-09-30T12:00:00Z"
+    },
+    "schedule2": {
+      "id": "2",
+      "user_id": "testUserId",
+      "medication_id": 1,
+      "start_date": "2023-10-01",
+      "end_date": "2023-10-31",
+      "frequency": "daily",
+      "time_of_day": "afternoon",
+      "day_of_week": "Monday",
+      "created_at": "2023-09-30T12:00:00Z"
+    }
   }
 }

@@ -9,7 +9,7 @@
     "db-setup": "node scripts/setupDatabase.js",
     "db-clear": "node scripts/clearDatabase.js",
     "db-seed": "node scripts/seedDatabase.js",
-    "test": "jest --watchAll=false --coverage --detectOpenHandles --forceExit"
+    "test": "jest --coverage"
   },
   "author": "",
   "license": "ISC",

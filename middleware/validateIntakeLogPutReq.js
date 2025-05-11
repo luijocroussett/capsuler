@@ -1,6 +1,6 @@
 const { body, validationResult } = require("express-validator");
 
-const validateMedicationsPutReq = [
+const validateIntakeLogsPutReq = [
   body("id").notEmpty().withMessage("Id is required"),
   body("status")
     .optional()
@@ -26,4 +26,4 @@ const validateMedicationsPutReq = [
   },
 ];
 
-module.exports = validateMedicationsPutReq;
+module.exports = validateIntakeLogsPutReq;
